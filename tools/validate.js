@@ -6,7 +6,7 @@ const tests = vm.runInContext(src + '\nTESTS', ctx);
 if (tests.length !== 10) throw Error('Expected exactly 10 tests');
 for (const t of tests) {
   if (!t.questions.length) throw Error('No questions in ' + t.id);
-  const lows = t.questions.map(q => Math.min(...q.options.map(o => o.value)));
+  const lows = t.questions.map(q => Math.min(...q.options.map(o => o.value).filter(Number.isFinite).filter(Number.isFinite)));
   const highs = t.questions.map(q => Math.max(...q.options.map(o => o.value)));
   const min = lows.reduce((a,b)=>a+b,0);
   const max = highs.reduce((a,b)=>a+b,0);
